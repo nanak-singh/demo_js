@@ -3,13 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JS Attack Surface Analyzer - Demo</title>
+  <title>Demo JS Runner</title>
 </head>
 <body>
-  <h1>JS Attack Surface Analyzer Demo</h1>
-  <p>Open DevTools → Console to see logs.</p>
+  <h1>Demo JS Runner</h1>
+  <p>Open DevTools → Network tab</p>
 
-  <!-- Load your JS file -->
-  <script src="./demo.js"></script>
+  <!-- Load axios (because demo.js uses axios) -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <!-- Load jQuery (because demo.js uses $ / $.ajax / $.get) -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Load your JS -->
+  <script src="/demo.js"></script>
 </body>
 </html>
