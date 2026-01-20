@@ -1,16 +1,32 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Netlify JS Load Test</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual JS Loader</title>
 </head>
 <body>
-  <h1>Index Loaded Test</h1>
+  <h1>Manual JS Loader</h1>
+  <p>Click the button to load <b>demo.js</b> via HTTP request.</p>
+
+  <button onclick="loadDemoJs()">Load demo.js</button>
+
+  <pre id="status" style="margin-top:15px; background:#111; color:#0f0; padding:10px;">
+Waiting...
+  </pre>
 
   <script>
-    const script = document.createElement("script");
-    script.src = "/demo.js?cb=" + Date.now(); // cache buster
-    document.head.appendChild(script);
+    function loadDemoJs() {
+      const status = document.getElementById("status");
+      status.textContent = "Loading demo.js ...";
+
+      const s = document.createElement("script");
+      s.src = "/demo.js?cb=" + Date.now(); // cache-buster so Burp logs it
+      s.onload = () => status.textContent = "demo.js loaded successfully ✅";
+      s.onerror = () => status.textContent = "Failed to load demo.js ❌ (check path / Netlify deploy)";
+
+      document.body.appendChild(s);
+    }
   </script>
 </body>
 </html>
