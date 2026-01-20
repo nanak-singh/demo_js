@@ -3,30 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Manual JS Loader</title>
+  <title>Auto Load demo.js</title>
 </head>
 <body>
-  <h1>Manual JS Loader</h1>
-  <p>Click the button to load <b>demo.js</b> via HTTP request.</p>
+  <h1>Auto Load demo.js</h1>
+  <p>If this page loads, it will automatically request <b>/demo.js</b>.</p>
 
-  <button onclick="loadDemoJs()">Load demo.js</button>
-
-  <pre id="status" style="margin-top:15px; background:#111; color:#0f0; padding:10px;">
-Waiting...
+  <pre id="status" style="background:#111;color:#0f0;padding:10px;">
+Loading demo.js...
   </pre>
 
   <script>
-    function loadDemoJs() {
-      const status = document.getElementById("status");
-      status.textContent = "Loading demo.js ...";
-
+    // Force-load demo.js via HTTP request (cache-busted so Burp logs it every time)
+    (function () {
       const s = document.createElement("script");
-      s.src = "/demo.js?cb=" + Date.now(); // cache-buster so Burp logs it
-      s.onload = () => status.textContent = "demo.js loaded successfully ✅";
-      s.onerror = () => status.textContent = "Failed to load demo.js ❌ (check path / Netlify deploy)";
+      s.src = "/demo.js?cb=" + Date.now();
 
-      document.body.appendChild(s);
-    }
+      s.onload = () => {
+        document.getElementById("status").textContent = "demo.js loaded successfully ✅";
+      };
+
+      s.onerror = () => {
+        document.getElementById("status").textContent = "demo.js failed to load ❌ (check file name/path on Netlify)";
+      };
+
+      document.head.appendChild(s);
+    })();
   </script>
 </body>
 </html>
