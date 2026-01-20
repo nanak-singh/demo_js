@@ -1,21 +1,16 @@
 <!doctype html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Demo JS Runner</title>
+  <meta charset="utf-8">
+  <title>Netlify JS Load Test</title>
 </head>
 <body>
-  <h1>Demo JS Runner</h1>
-  <p>Open DevTools → Network tab</p>
+  <h1>Index Loaded Test</h1>
 
-  <!-- Load axios (because demo.js uses axios) -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-  <!-- Load jQuery (because demo.js uses $ / $.ajax / $.get) -->
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
-  <!-- Load your JS -->
-  <script src="/demo.js"></script>
+  <script>
+    const script = document.createElement("script");
+    script.src = "/demo.js?cb=" + Date.now(); // cache buster
+    document.head.appendChild(script);
+  </script>
 </body>
 </html>
